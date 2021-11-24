@@ -52,7 +52,7 @@ def map_CAM(DT: tree.DecisionTreeClassifier):
                     catch.append(poped)
                     flag = True
     table = np.array(table)
-    return (table > 0).astype(np.int)
+    return (table > 0).astype(np.int32)
 
 def find_features(DT: tree.DecisionTreeClassifier):
     tree_text = tree.export_text(DT)
