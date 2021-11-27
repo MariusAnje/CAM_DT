@@ -112,7 +112,7 @@ if __name__ == "__main__":
             for images, labels in trainloader:
                 dt.fit(images.view(images.size(0),-1).numpy(), labels.numpy())
             for images, labels in testloader:
-                pred = dt.predict(images.view(images.size(0),-1).numpy())
+                pred = m.predict(images.view(images.size(0),-1).numpy())
                 acc = (pred == labels.numpy()).sum() / len(labels)
                 if acc > best_acc:
                     best_feature = dt.selected_features
