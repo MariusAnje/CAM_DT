@@ -10,6 +10,9 @@ def find_sparsity(DT: tree.DecisionTreeClassifier):
             empty += 1
     return 1 - ((table == 1).sum() / (table.size - empty * len(table))), table
 
+def find_size(DT: tree.DecisionTreeClassifier):
+    return DT.get_n_leaves() * len(find_features(DT))
+
 def map_CAM(DT: tree.DecisionTreeClassifier):
     flag = False
     tree_text = tree.export_text(DT)
