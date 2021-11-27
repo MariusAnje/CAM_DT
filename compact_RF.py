@@ -102,10 +102,11 @@ if __name__ == "__main__":
         pred = m.predict(images.view(images.size(0),-1).numpy())
         print((pred == labels.numpy()).sum() / len(labels))
 
-    for dt in tqdm(m.estimators_):
+    # for dt in tqdm(m.estimators_):
+    for dt in m.estimators_:
         best_feature = []
         best_acc = 0
-        for _ in range(2):
+        for _ in range(100):
             dt.select_features()
             for images, labels in trainloader:
                 dt.fit(images.view(images.size(0),-1).numpy(), labels.numpy())
