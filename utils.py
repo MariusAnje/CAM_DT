@@ -2,18 +2,22 @@ from sklearn import tree
 from matplotlib import pyplot as plt
 import numpy as np
 
-def find_sparsity(DT: tree.DecisionTreeClassifier):
-    table = map_CAM(DT)
-    empty = 0
-    for i in range(len(table[0])):
-        if sum(table[:,i]) == 0:
-            empty += 1
-    return 1 - ((table == 1).sum() / (table.size - empty * len(table))), table
+def str2bool(a) -> bool:
+    """
+        a stupid function that parses "True"(str) to True(bool)
+        because the argparse package is silly.
+    """
+    if a == "True":
+        return True
+    elif a == "False":
+        return False
+    else:
+        raise NotImplementedError(f"{a}")
 
-def find_size(DT: tree.DecisionTreeClassifier):
-    return DT.get_n_leaves() * len(find_features(DT))
-
-def map_CAM(DT: tree.DecisionTreeClassifier):
+def map_CAM(DT: tree.DecisionTreeClassifier) -> np.ndarray:
+    """
+        maps a Decision Tree to CAM
+    """
     flag = False
     tree_text = tree.export_text(DT)
     lines = tree_text.split("\n")
@@ -57,7 +61,27 @@ def map_CAM(DT: tree.DecisionTreeClassifier):
     table = np.array(table)
     return (table > 0).astype(np.int32)
 
-def find_features(DT: tree.DecisionTreeClassifier):
+def find_sparsity(DT: tree.DecisionTreeClassifier):
+    """
+        Calculates the sparsity of a Decision Tree when mapped to CAM.
+    """
+    table = map_CAM(DT)
+    empty = 0
+    for i in range(len(table[0])):
+        if sum(table[:,i]) == 0:
+            empty += 1
+    return 1 - ((table == 1).sum() / (table.size - empty * len(table))), table
+
+def find_size(DT: tree.DecisionTreeClassifier):
+    """
+        Calculates the size of a Decision Tree when mapped to CAM.
+    """
+    return DT.get_n_leaves() * len(find_features(DT))
+
+def find_features(DT: tree.DecisionTreeClassifier) -> list:
+    """
+        Find all features used in a decision tree.
+    """
     tree_text = tree.export_text(DT)
     lines = tree_text.split("\n")
     depth = DT.get_depth()
