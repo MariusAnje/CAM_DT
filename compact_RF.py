@@ -127,15 +127,16 @@ if __name__ == "__main__":
     m = MoRandomForest(clf.estimators_)
     for images, labels in testloader:
         pred = m.predict(images.view(images.size(0),-1).numpy())
-        print((pred == labels.numpy()).sum() / len(labels))
+        acc = (pred == labels.numpy()).sum() / len(labels)
+        print(f"original acc: {acc}")
 
     ranking = list(range(len(m.estimators_)))
 
     if args.shuffle:
         np.random.shuffle(ranking)
 
-    for index in tqdm(ranking):
-    # for index in ranking:
+    # for index in tqdm(ranking):
+    for index in ranking:
         dt = m.estimators_[index]
         best_feature = []
         best_acc = 0
