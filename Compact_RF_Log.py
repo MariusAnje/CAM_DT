@@ -31,12 +31,12 @@ if __name__ == "__main__":
 
     # Loading MNIST dataset. Not that all data is made into a huge vector
     BS = 50000
-    trainset = torchvision.datasets.MNIST(root='~/Private/data', train=True,
+    trainset = torchvision.datasets.MNIST(root='./DATA', train=True,
                                             download=False, transform=transforms.ToTensor())
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=BS,
                                             shuffle=True, num_workers=4)
 
-    testset = torchvision.datasets.MNIST(root='~/Private/data', train=False,
+    testset = torchvision.datasets.MNIST(root='./DATA', train=False,
                                         download=False, transform=transforms.ToTensor())
     testloader = torch.utils.data.DataLoader(testset, batch_size=BS,
                                                 shuffle=False, num_workers=4)
@@ -76,7 +76,7 @@ if __name__ == "__main__":
         print(f"original acc: {acc}")
 
     ##LOG THIS
-    with open(addr, 'a+') as filehandle:
+    with open(addr, 'w') as filehandle:
             filehandle.write(f"sparsity before compression: {np.mean(sparsity):.5f}"+'\n')
             filehandle.write(f"CAM size before compression: {np.mean(table_size)}"+'\n')
             filehandle.write(f"original acc: {acc}"+'\n')
@@ -118,7 +118,7 @@ if __name__ == "__main__":
             filehandle.write('___INDEX___'+'%d'%index+'___BESTACC___'+'%.5f'%best_acc+'___BESTFeature___'+'%s'%best_feature+'\n')
             for item in records:
                 filehandle.write(f"{item}\n")
-                filehandle.write('\n')
+            filehandle.write('\n')
 
         for images, labels in trainloader:
             dt.fit(images.view(images.size(0),-1).numpy(), labels.numpy())
@@ -143,7 +143,7 @@ if __name__ == "__main__":
 
     ##LOG THIS
     with open(addr, 'a+') as filehandle:
-            filehandle.write(f"sparsity after compression: {np.mean(sparsity):.5f}"{np.mean(sparsity):.5f}"+'\n')
+            filehandle.write(f"sparsity after compression: {np.mean(sparsity):.5f}"+'\n')
             filehandle.write(f"CAM size after compression: {np.mean(table_size)}"+'\n')
             filehandle.write(f"compact acc: {acc}")
         

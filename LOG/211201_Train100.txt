@@ -1,0 +1,19 @@
+___INDEX___2___BESTACC___0.74___BESTFeature___[409 149 266 270 487]
+(array([409, 149, 266, 270, 487]), 0.7426)
+(array([656, 315, 551, 455, 489]), 0.7404)
+___INDEX___0___BESTACC___0.74___BESTFeature___[595 569 463 350 183]
+(array([378, 156, 596, 100, 463]), 0.7398)
+(array([595, 569, 463, 350, 183]), 0.7417)
+___INDEX___1___BESTACC___0.74___BESTFeature___[655 540 580 457 371]
+(array([655, 540, 580, 457, 371]), 0.7431)
+(array([124, 405, 540, 438, 383]), 0.7424)
+___INDEX___2___BESTACC___0.74___BESTFeature___[656 149 600 428 408]
+(array([315, 516, 405, 371, 551]), 0.7436)
+(array([656, 149, 600, 428, 408]), 0.7444)
+___INDEX___3___BESTACC___0.74___BESTFeature___[514 270 153 434 429]
+(array([514, 270, 153, 434, 429]), 0.7414)
+(array([513, 228, 383, 270, 401]), 0.741)
+sparsity before compression: {np.mean(sparsity):.5f}
+CAM size before compression: 955.3
+sparsity before compression: 0.41148
+CAM size before compression: 955.3
