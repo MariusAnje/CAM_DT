@@ -25,6 +25,8 @@ if __name__ == "__main__":
             help='if we use pretrained models')
     parser.add_argument('--shuffle', action='store',type=str2bool, default=True,
             help='if we shuffle the order of DTs in RF')
+    parser.add_argument('--CCFA', action='store', type=float, default=0.005,
+            help='pruning parameter')
     
     args = parser.parse_args()
     print(args)
@@ -88,6 +90,7 @@ if __name__ == "__main__":
         # for each decision tree, randomly find some features, train a new tree
         # find the best trained tree
         for _ in range(args.iter):
+            dt.DT.ccp_alpha = args.CCFA
             dt.select_features(args.n_features, args.method)
             for images, labels in trainloader:
                 dt.fit(images.view(images.size(0),-1).numpy(), labels.numpy())
