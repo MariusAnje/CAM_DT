@@ -19,6 +19,8 @@ if __name__ == "__main__":
             help='# of iterations for finding a DT')
     parser.add_argument('--n_features', action='store', type=int, default=5,
             help='# of features used in a DT')
+    parser.add_argument('--method', action='store', choices = ["random", "size"], default="random",
+            help='# of features used in a DT')
     parser.add_argument('--pretrained', action='store',type=str2bool, default=True,
             help='if we use pretrained models')
     parser.add_argument('--shuffle', action='store',type=str2bool, default=True,
@@ -86,7 +88,7 @@ if __name__ == "__main__":
         # for each decision tree, randomly find some features, train a new tree
         # find the best trained tree
         for _ in range(args.iter):
-            dt.select_features(args.n_features)
+            dt.select_features(args.n_features, args.method)
             for images, labels in trainloader:
                 dt.fit(images.view(images.size(0),-1).numpy(), labels.numpy())
             for images, labels in testloader:

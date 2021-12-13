@@ -19,15 +19,23 @@ class HanpiDecisionTree():
         self.depth = self.DT.get_depth() # Depth of this tree
         self.features = utils.find_features(self.DT) # All features used in this tree
         self.selected_features = [] # A subset of self.features. The selected features ar used to train a compact tree
+        self.ori_map = utils.map_CAM(self.DT) # Find the original mapping of this tree
     
-    def select_features(self, n_features):
+    def select_features(self, n_features, method):
         """
             randomly select the number "n_features" of features to form a subset "self.selected_features" of "self.features"
         """
         if n_features > len(self.features): # if the number of feature needed is more than the actual number of features used.
             self.selected_features = self.features
         else:
-            self.selected_features = np.random.choice(self.features, n_features, replace=False)
+            if method == "random":
+                self.selected_features = np.random.choice(self.features, n_features, replace=False)
+            elif method == "size":
+                size = np.sum(self.ori_map, axis = 0)
+                res = np.argsort(size)[::-1]
+                self.selected_features = res[:n_features]
+            else:
+                raise NotImplementedError
     
     def generate_input(self, X):
         """
