@@ -87,7 +87,7 @@ def find_features(DT: tree.DecisionTreeClassifier) -> list:
     depth = DT.get_depth()
     features = []
     for l in lines[:-1]:
-        if l.find("class") == -1:
+        if l.find("class") == -1 and l.find("truncate") == -1:
             app = depth - (l.find("feature") - 1)//4
             left = l.find("_") + 1
             right = l.find("<=") if l.find("<=") != -1 else l.find(">")
